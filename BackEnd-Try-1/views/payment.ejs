@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/payment.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&family=Poppins:wght@100;200;400&display=swap"
+      rel="stylesheet"
+    />
+    <title>AIVerse 1.0 | Payment Submission</title>
+    <link rel="icon" type="images/x-icon" href="/Static_images/ailogo.png" />
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+  </head>
+
+  <script>
+    function enableSubmit() {
+      const uploadInput = document.getElementById("screenshot");
+      const submitButton = document.getElementById("submitBtn");
+      submitButton.addEventListener("click", function () {
+        // Check the current text of the button
+        if (submitButton.innerText === "submit") {
+          // Change the text to something else
+          submitButton.innerText = "submit";
+        } else {
+          // Change it back to the original text
+          submitButton.innerText = "submitting....";
+        }
+      });
+
+      if (uploadInput.files.length > 0) {
+        submitButton.disabled = false;
+      } else {
+        submitButton.disabled = true;
+      }
+    }
+
+    function showSuccessMessage() {
+      // Display a success message using a popup, alert, or other method
+      alert("Payment screenshot submitted successfully!");
+    }
+  </script>
+
+  <body>
+    <div class="main-div">
+      <p><strong>Name:</strong> {{ name }}</p>
+      <p><strong>Contact:</strong> {{ number }}</p>
+      <p><strong>Branch:</strong> {{ branch }}</p>
+      <p><strong>Year:</strong> {{ year }}</p>
+      <p><strong>Email:</strong> {{ email }}</p>
+      <p><strong>Team:</strong> {{ team_size }}</p>
+      <p><strong>Event:</strong> {{ event }}</p>
+      <p><strong>Amount:</strong> {{ amount }}</p>
+
+      <form
+        action="/payment"
+        method="post"
+        enctype="multipart/form-data"
+        class="payment-form"
+      >
+        <h1>Payment</h1>
+
+        <br />
+        <img
+          src="/Static_images/event_payment_QR.jpeg"
+          alt="payment qr"
+          id="QR"
+        />
+        <br /><br />
+
+        <label for="screenshot">Upload Payment Screenshot:</label><br /><br />
+        <h6 style="color: red">* Uploading the Screenshot is Mandatory</h6>
+        <br />
+        <input
+          type="file"
+          id="screenshot"
+          name="screenshot"
+          accept="image/*"
+          onchange="enableSubmit()"
+        /><br /><br />
+
+        Enter the transaction-id: <br />
+        <input
+          type="text"
+          id="transaction-id"
+          name="transaction-id"
+          placeholder="Transaction-id"
+        /><br /><br />
+
+        <button type="submit" id="submitBtn" disabled>Submit</button>
+      </form>
+    </div>
+  </body>
+</html>
+
+<!-- <input
+type="hidden"
+class="input-field"
+name="name"
+value="{{ name }}"
+/>
+<input
+type="hidden"
+class="input-field"
+name="contact"
+value="{{ number }}"
+/>
+<input
+type="hidden"
+class="input-field"
+name="email"
+value="{{ email }}"
+/>
+<input
+type="hidden"
+class="input-field"
+name="Branch"
+value="{{ branch }}"
+/>
+<input
+type="hidden"
+class="input-field"
+name="Year"
+value="{{ year }}"
+/>
+<input
+type="hidden"
+class="input-field"
+name="event"
+value="{{ event }}"
+/>
+<input
+type="hidden"
+class="input-field"
+name="team_size"
+value="{{ team_size }}"
+/>
+<input
+type="hidden"
+class="input-field"
+name="amount"
+value="{{ amount }}"
+/> -->
+
+<!-- This div will be dynamically populated with team members' input fields
+    <div id="team-members-container"></div>
+    <script>
+      function populateTeamMembers() {
+        const teamSize = parseInt("{{team_size}}");
+        const teamMembersContainer = document.getElementById(
+          "team-members-container"
+        );
+
+        // Clear any existing content
+        teamMembersContainer.innerHTML = "";
+
+        // Loop through and create input fields for each team member
+        for (let i = 1; i < teamSize; i++) {
+          const memberDiv = document.createElement("div");
+          memberDiv.className = "team-member-inputs";
+
+          memberDiv.innerHTML = `
+                <h3>Teammate ${i}</h3>
+                <label for="team_member_name_${i}">Name:</label><br />
+                <input type="text" name="team_member_name_${i}" placeholder="Name"><br />
+                <label for="team_member_branch_${i}">Branch:</label><br />
+                <input type="text" name="team_member_branch_${i}" placeholder="Branch"><br />
+                <label for="team_member_year_${i}">Year:</label><br />
+                <input type="text" name="team_member_year_${i}" placeholder="Year"><br />
+                <label for="team_member_email_${i}">Email:</label><br />
+                <input type="email" name="team_member_email_${i}" placeholder="Email"><br />
+                <label for="team_member_contact_${i}">Phone Number:</label><br />
+                <input type="text" name="team_member_contact_${i}" placeholder="Phone Number"><br />
+                <br />
+              `;
+
+          teamMembersContainer.appendChild(memberDiv);
+        }
+      }
+
+      // Call the function to populate teammates when the page loads
+      window.onload = populateTeamMembers; 
+    </script>
+    -->

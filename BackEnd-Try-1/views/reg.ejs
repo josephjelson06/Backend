@@ -1,0 +1,275 @@
+<!-- Phone Number input type: tel instead of text -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIVerse Registration</title>
+
+    <link rel="icon" type="images/x-icon" href="/Static_images/ailogo.png" />
+
+    <link rel="stylesheet" href="/css/reg.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&family=Poppins:wght@100;200;400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="main-body">
+      <h1 class="registration">Event Registration</h1>
+      <br /><br />
+      <form
+        action="/payment"
+        class="form"
+        onsubmit="return validateForm()"
+        method="post"
+      >
+        <!-- Name -->
+        <div class="name">
+          <label for="name-div">Name</label><br /><br />
+          <input type="text" class="input-field" name="name" />
+        </div>
+
+        <!-- Phone Number -->
+        <div class="Phonenumber-div">
+          <label for="number">Phone number</label><br /><br />
+          <input
+            type="tel"
+            class="input-field"
+            pattern="[1-9]{1}[0-9]{9}"
+            name="contact"
+          />
+        </div>
+
+        <!-- Email -->
+        <div class="email-div">
+          <label for="name">Email</label><br /><br />
+          <input type="email" class="input-field" name="email" />
+        </div>
+
+        <!-- Branch -->
+        <div class="branch-div">
+          <label for="name">Branch</label><br /><br />
+          <select name="Branch" id="branch" class="input-field">
+            <option style="display: none"></option>
+            <option value="CE">Computer Engineering</option>
+            <option value="CSE">CSE(Data Science)</option>
+            <option value="IT">Information Technology</option>
+            <option value="AI">Artificial Intelligence</option>
+            <option value="ETC">Electronics And Telecommunication</option>
+            <option value="EE">Electrical Engineering</option>
+            <option value="ME">Mechanical Engineering</option>
+            <option value="Civil">Civil Engineering</option>
+            <option value="IOT">Internet Of Things</option>
+            <option value="CSBS">CS(Business System)</option>
+            <option value="CS">Cyber Security</option>
+            <option value="BV">B.VOC</option>
+          </select>
+        </div>
+
+        <!-- Year -->
+        <div class="year-div">
+          <label for="name">Year</label><br /><br />
+          <select name="Year" id="year" class="input-field">
+            <option style="display: none"></option>
+            <option value="1">1st</option>
+            <option value="2">2nd</option>
+            <option value="3">3rd</option>
+            <option value="4">4th</option>
+          </select>
+        </div>
+
+        <!-- Event Selection -->
+        <div class="event-div">
+          <label for="event">Event</label><br /><br />
+          <select
+            name="event"
+            id="event"
+            class="input-field"
+            onchange="updateAmount()"
+          >
+            <option style="display: none"></option>
+            <option value="Cubic Realm">Cubic Realm</option>
+            <option value="GigaGen">GigaGen</option>
+            <option value="BeatBots">BeatBots</option>
+            <option value="optiML">optiML</option>
+            <option value="VentureVista.AI">VentureVista.AI</option>
+          </select>
+        </div>
+
+        <!-- Team Size -->
+        <div class="team-div">
+          <label for="team">Team size</label><br /><br />
+          <select
+            name="team"
+            id="team"
+            class="input-field"
+            onchange="updateAmount()"
+          >
+            <option style="display: none"></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+        <div class="btn-pay">
+          <input type="submit" value="Pay and Register" id="pay-button" />
+        </div>
+      </form>
+      <br />
+    </div>
+  </body>
+
+  <script>
+    function validateForm() {
+      const nameInput = document.querySelector(".name .input-field");
+      const phoneInput = document.querySelector(
+        ".Phonenumber-div .input-field"
+      );
+      const emailInput = document.querySelector(".email-div .input-field");
+      const branchSelect = document.getElementById("branch");
+      const yearSelect = document.getElementById("year");
+      const eventSelect = document.getElementById("event");
+      const teamSelect = document.getElementById("team");
+
+      if (
+        nameInput.value === "" ||
+        phoneInput.value === "" ||
+        emailInput.value === "" ||
+        branchSelect.value === "" ||
+        yearSelect.value === "" ||
+        eventSelect.value === "" ||
+        teamSelect.value === ""
+      ) {
+        alert("Please fill in all the required fields.");
+        return false; // Prevent form submission
+      }
+      return true; // Allow form submission
+    }
+
+    // Updating Amount Dynamically (according to event selected)
+    function updateAmount() {
+      const eventSelect = document.getElementById("event");
+      const teamSelect = document.getElementById("team");
+      const payButton = document.getElementById("pay-button");
+
+      const eventValue = eventSelect.value;
+      const teamValue = teamSelect.value;
+
+      let amount = 0;
+
+      // Event: Cubic realm
+      if (eventValue === "Cubic Realm") {
+        if (teamValue === "1") {
+          amount = 70;
+          payButton.disabled = false;
+        } else if (teamValue === "2") {
+          amount = 100;
+          payButton.disabled = false;
+        } else if (teamValue === "3") {
+          payButton.disabled = true;
+          alert("Maximum 2 members are allowed in this event");
+        } else if (teamValue === "4") {
+          payButton.disabled = true;
+          alert("Maximum 2 members are allowed in this event");
+        }
+      }
+
+      // Event: GigaGen
+      if (eventValue === "GigaGen") {
+        if (teamValue === "1") {
+          amount = 50;
+          payButton.disabled = false;
+        } else if (teamValue === "2") {
+          amount = 100;
+          payButton.disabled = false;
+        } else if (teamValue === "3") {
+          payButton.disabled = true;
+          alert("Team size should allow 1,2 or 4. Please select accordingly");
+        } else if (teamValue === "4") {
+          amount = 130;
+          payButton.disabled = false;
+        }
+      }
+
+      // Event: Optiml
+      if (eventValue === "optiML") {
+        if (teamValue === "1") {
+          amount = 70;
+          payButton.disabled = false;
+        } else if (teamValue === "2") {
+          amount = 100;
+          payButton.disabled = false;
+        } else if (teamValue === "3") {
+          amount = 150;
+          payButton.disabled = false;
+        } else if (teamValue === "4") {
+          payButton.disabled = true;
+          alert("Team size should be 1,2 or 3. Please select accordingly");
+        }
+      }
+
+      // Event: BeatBots
+      if (eventValue === "BeatBots") {
+        if (teamValue === "1") {
+          amount = 70;
+          payButton.disabled = false;
+        } else if (teamValue === "2") {
+          amount = 100;
+          payButton.disabled = false;
+        } else if (teamValue === "3") {
+          payButton.disabled = true;
+          alert("Team size should be 1 or 2. Please select accordingly");
+        } else if (teamValue === "4") {
+          payButton.disabled = true;
+          alert("Team size should be 1 or 2. Please select accordingly");
+        }
+      }
+      
+      // Event: VentureVista.AI
+      if (eventValue === "VentureVista.AI") {
+        if (teamValue === "1") {
+          amount = 70;
+          payButton.disabled = false;
+        } else if (teamValue === "2") {
+          amount = 150;
+          payButton.disabled = false;
+        } else if (teamValue === "3") {
+          amount = 200;
+          payButton.disabled = false;
+        } else if (teamValue === "4") {
+          amount = 200;
+          payButton.disabled = false;
+        }
+      }
+      // You can add similar conditions for other events here
+      payButton.value = `Pay Rs.${amount} and Register`;
+      document.getElementById("amount").value = amount;
+    }
+  </script>
+</html>
+
+<!-- This is where dynamically created input fields will be appended -->
+<!-- 
+<input type="hidden" id="amount" name="amount" />
+<div id="team-member-names" class="team-member-names">
+</div> -->
+
+<!-- //  I don't understand this code,so commenting it out for now
+
+// window.onload = function () {
+//       const urlParams = new URLSearchParams(window.location.search);
+//       const selectedEvent = urlParams.get("event");
+
+//       if (selectedEvent) {
+//         const eventSelect = document.getElementById("event");
+//         eventSelect.value = selectedEvent;
+//       }
+//     };
+// Validation Logic (so that fields aren't left empty) -->
